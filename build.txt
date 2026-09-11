@@ -1,0 +1,3 @@
+displayName = Corruption Overhaul
+author = Phant0m21
+version = 0.1

@@ -1,0 +1,12 @@
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\bin\Debug\net8.0\CorruptionOverhaul.deps.json
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\bin\Debug\net8.0\CorruptionOverhaul.dll
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\bin\Debug\net8.0\CorruptionOverhaul.pdb
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.csproj.AssemblyReference.cache
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.AssemblyInfoInputs.cache
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.AssemblyInfo.cs
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.csproj.CoreCompileInputs.cache
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.dll
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\refint\CorruptionOverhaul.dll
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.pdb
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\ref\CorruptionOverhaul.dll

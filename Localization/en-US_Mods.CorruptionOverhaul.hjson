@@ -1,0 +1,50 @@
+Buffs: {
+	EaterMinionBuff: {
+		DisplayName: Ebonfin
+		Description: A tiny Ebonfin fights for you
+	}
+}
+
+Items: {
+	EaterStaff: {
+		DisplayName: Ebonfin Staff
+		Tooltip:
+			'''
+			Summons a curious corrupt fish to fight for you
+			Uses 1 minion slot
+			'''
+	}
+
+	RottenSlicer: {
+		DisplayName: Rotten Slicer
+		Tooltip:
+			'''
+			Releases a slow moving wave of energy upon swinging
+			Inflicts Cursed Inferno and Withered Armor
+			'''
+	}
+
+	MiasmaShatter: {
+		DisplayName: Miasma Shatter
+		Tooltip:
+			'''
+			Releases miasma clouds
+			Striking enemies summons corrupted crystals
+			Crystals seek out nearby enemies
+			Ignores 20 defense
+
+			[c/69E65A:The chain spins. The miasma spreads. The world cracks.]
+			'''
+	}
+}
+
+Projectiles: {
+	EaterMinion.DisplayName: Ebonfin
+	EaterMinionProj.DisplayName: Ebonfin's spit
+	RottenSlicerWave.DisplayName: Rotten Slicer Wave
+	MiasmaCloud1.DisplayName: Miasma Cloud1
+	MiasmaCloud2.DisplayName: Miasma Cloud2
+	MiasmaCloud3.DisplayName: Miasma Cloud3
+	MiasmaCrystal.DisplayName: Miasma Crystal
+	MiasmaShatterProj.DisplayName: Miasma Shatter Proj
+}
