@@ -3,6 +3,11 @@ Buffs: {
 		DisplayName: Ebonfin
 		Description: A tiny Ebonfin fights for you
 	}
+
+	CorrosiveTouch: {
+		DisplayName: Corrosive Touch
+		Description: Reduced defense, stopped life regen, and slowed mana regen
+	}
 }
 
 Items: {

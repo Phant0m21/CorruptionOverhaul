@@ -9,7 +9,7 @@ namespace CorruptionOverhaul.Content.Items.Weapons.Melee
     {
         public override void SetDefaults()
         {
-            Item.damage = 98;
+            Item.damage = 111;
             Item.DamageType = DamageClass.Melee;
             Item.knockBack = 3.5f;
             Item.crit = 4;
@@ -33,7 +33,7 @@ namespace CorruptionOverhaul.Content.Items.Weapons.Melee
             CreateRecipe()
                 .AddIngredient(ItemID.JungleYoyo, 1)
                 .AddIngredient(ItemID.CorruptYoyo, 1)
-                .AddIngredient(ItemID.ChlorophyteBar, 8)
+                .AddIngredient(ItemID.ChlorophyteBar, 2)
                 .AddIngredient(ItemID.CursedFlame, 15)
                 .AddIngredient(ItemID.SoulofNight, 10)
                 .AddTile(TileID.DemonAltar)
