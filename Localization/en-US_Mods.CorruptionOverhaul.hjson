@@ -37,8 +37,20 @@ Items: {
 			Striking enemies summons corrupted crystals
 			Crystals seek out nearby enemies
 			Ignores 20 defense
+			'''
+	}
 
-			[c/69E65A:The chain spins. The miasma spreads. The world cracks.]
+	RottenParasite: {
+		DisplayName: Rotten Parasite
+		Tooltip:
+			'''
+			Grants the Dangersense effect
+			Increases life regeneration by 3
+			Has a 10% chance when hurt to confuse nearby enemies
+			While at full health increases damage by 60% of your damage resistance
+			While at full health damage taken from a hit is reduced by 50%
+
+			[c/B349E6:It feeds on your blood, but grants heightened senses in return]
 			'''
 	}
 }
