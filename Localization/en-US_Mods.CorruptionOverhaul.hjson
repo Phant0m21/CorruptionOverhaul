@@ -53,6 +53,15 @@ Items: {
 			[c/B349E6:It feeds on your blood, but grants heightened senses in return]
 			'''
 	}
+
+	ShadowYoyo: {
+		DisplayName: Shadow Yoyo
+		Tooltip:
+			'''
+			Periodically launches homing shadow spikes
+			A spike wraps its target in a spinning shadow tangle
+			'''
+	}
 }
 
 Projectiles: {
@@ -64,4 +73,7 @@ Projectiles: {
 	MiasmaCloud3.DisplayName: Miasma Cloud3
 	MiasmaCrystal.DisplayName: Miasma Crystal
 	MiasmaShatterProj.DisplayName: Miasma Shatter Proj
+	ShadowYoyoProj.DisplayName: Shadow Yoyo
+	ShadowSpike.DisplayName: Shadow Spike
+	ShadowTangle.DisplayName: Shadow Tangle
 }

@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,7 +13,7 @@ namespace CorruptionOverhaul.Content.Projectiles.Minions
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 1;
 
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
@@ -19,8 +21,8 @@ namespace CorruptionOverhaul.Content.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 48;
-            Projectile.height = 29;
+            Projectile.width = 12;
+            Projectile.height = 20;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Summon;
@@ -28,29 +30,20 @@ namespace CorruptionOverhaul.Content.Projectiles.Minions
             Projectile.timeLeft = MaxLifeTime;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.light = 0.05f;
+            Projectile.light = 0.3f;
             Projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            Projectile.frameCounter++;
-
-            if (Projectile.frameCounter >= 5)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-
-                if (Projectile.frame >= 4)
-                    Projectile.frame = 0;
-            }
-
             if (Projectile.velocity.LengthSquared() > 0.01f)
             {
                 Projectile.rotation =
                     Projectile.velocity.ToRotation() +
                     MathHelper.PiOver2;
             }
+
+                    Lighting.AddLight(Projectile.Center, 0.25f, 0.04f, 0.45f);
 
             SpawnDust();
 
@@ -59,7 +52,7 @@ namespace CorruptionOverhaul.Content.Projectiles.Minions
 
         private void SpawnDust()
         {
-            if (!Main.rand.NextBool(2))
+            if (!Main.rand.NextBool(1))
                 return;
 
             Vector2 direction =
@@ -73,17 +66,86 @@ namespace CorruptionOverhaul.Content.Projectiles.Minions
                 position,
                 1,
                 1,
-                DustID.Corruption,
+                DustID.PurpleTorch,
                 -Projectile.velocity.X * 0.15f,
                 -Projectile.velocity.Y * 0.15f,
-                120,
-                default,
-                Main.rand.NextFloat(0.7f, 1.1f)
+                80,
+                new Color(170, 70, 255),
+                Main.rand.NextFloat(0.9f, 1.3f)
             );
 
             Dust dust = Main.dust[dustIndex];
             dust.noGravity = true;
-            dust.velocity *= 0.25f;
+            dust.velocity *= 0.4f;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle frame = texture.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
+            Vector2 origin = frame.Size() * 0.5f;
+            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+
+            for (int i = 3; i >= 1; i--)
+            {
+                float scale = Projectile.scale * (1f + i * 0.08f);
+                Color glowColor = new Color(135, 35, 220, 0) * (0.12f / i);
+                Main.EntitySpriteDraw(
+                    texture,
+                    drawPosition,
+                    frame,
+                    glowColor,
+                    Projectile.rotation,
+                    origin,
+                    scale,
+                    SpriteEffects.None,
+                    0f);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                if (Projectile.oldPos[i] == Vector2.Zero)
+                    continue;
+
+                float opacity = (Projectile.oldPos.Length - i) /
+                    (float)Projectile.oldPos.Length * 0.32f;
+                Vector2 trailPosition = Projectile.oldPos[i] + Projectile.Size * 0.5f - Main.screenPosition;
+
+                Main.EntitySpriteDraw(
+                    texture,
+                    trailPosition,
+                    frame,
+                    new Color(100, 20, 180, 0) * opacity,
+                    Projectile.rotation,
+                    origin,
+                    Projectile.scale * 0.9f,
+                    SpriteEffects.None,
+                    0f);
+            }
+
+            Main.EntitySpriteDraw(
+                texture,
+                drawPosition,
+                frame,
+                Color.White,
+                Projectile.rotation,
+                origin,
+                Projectile.scale,
+                SpriteEffects.None,
+                0f);
+
+            Main.EntitySpriteDraw(
+                texture,
+                drawPosition,
+                frame,
+                new Color(190, 95, 255, 0) * 0.55f,
+                Projectile.rotation,
+                origin,
+                Projectile.scale * 0.82f,
+                SpriteEffects.None,
+                0f);
+
+            return false;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

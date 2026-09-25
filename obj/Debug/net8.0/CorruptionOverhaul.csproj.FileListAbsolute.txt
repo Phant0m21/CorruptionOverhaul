@@ -10,3 +10,4 @@ C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverh
 C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\refint\CorruptionOverhaul.dll
 C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.pdb
 C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\ref\CorruptionOverhaul.dll
+C:\Users\danie\Documents\My Games\Terraria\tModLoader\ModSources\CorruptionOverhaul\obj\Debug\net8.0\CorruptionOverhaul.sourcelink.json
