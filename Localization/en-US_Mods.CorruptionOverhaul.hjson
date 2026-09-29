@@ -62,6 +62,15 @@ Items: {
 			A spike wraps its target in a spinning shadow tangle
 			'''
 	}
+
+	EpitaphsOrbit: {
+		DisplayName: Epitaph's Orbit
+		Tooltip:
+			'''
+			Casts a trio of homing cursed orbs that pass through tiles
+			Explodes into an acid blast on impact inflicting Cursed Inferno
+			'''
+	}
 }
 
 Projectiles: {
@@ -76,4 +85,5 @@ Projectiles: {
 	ShadowYoyoProj.DisplayName: Shadow Yoyo
 	ShadowSpike.DisplayName: Shadow Spike
 	ShadowTangle.DisplayName: Shadow Tangle
+	EpitaphsOrbitProj.DisplayName: Epitaphs Orbit Proj
 }
