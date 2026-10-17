@@ -71,6 +71,11 @@ Items: {
 			Explodes into an acid blast on impact inflicting Cursed Inferno
 			'''
 	}
+
+	DefiledSlicingAxe: {
+		DisplayName: Defiled Slicing Axe
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -86,4 +91,6 @@ Projectiles: {
 	ShadowSpike.DisplayName: Shadow Spike
 	ShadowTangle.DisplayName: Shadow Tangle
 	EpitaphsOrbitProj.DisplayName: Epitaphs Orbit Proj
+	DefiledSlicingAxeEcho.DisplayName: Defiled Slicing Axe Echo
+	DefiledSlicingAxeProjectile.DisplayName: Defiled Slicing Axe Projectile
 }

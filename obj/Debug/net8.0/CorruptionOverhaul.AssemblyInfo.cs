@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CorruptionOverhaul")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a52100b79a757634795b0f993e424bc9e01f51e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b32d56a2159f980c7c5b3246bdeb3b58cd547fb3")]
 [assembly: System.Reflection.AssemblyProductAttribute("CorruptionOverhaul")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CorruptionOverhaul")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
