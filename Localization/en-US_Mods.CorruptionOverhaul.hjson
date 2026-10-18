@@ -74,7 +74,13 @@ Items: {
 
 	DefiledSlicingAxe: {
 		DisplayName: Defiled Slicing Axe
-		Tooltip: ""
+		Tooltip:
+			'''
+			Throws a cursed axe that summons spectral copies
+			Strikes inflict Broken Armor and Cursed Inferno
+
+			[c/56d90b:Turns out, being hacked to pieces is a group activity]
+			'''
 	}
 }
 

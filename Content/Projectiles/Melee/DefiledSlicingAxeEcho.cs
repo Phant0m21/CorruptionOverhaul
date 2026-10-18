@@ -15,14 +15,18 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
         private const float OrbitRadius = 210f;
         private const float LaunchSpeed = 17f;
         private const float HomingSpeed = 18f;
+        private const float SearchRadius = 300f;
+        private const int FrameCount = 5;
+        private const int FrameHeight = 107;
+        private const int FrameSpeed = 6;
 
         public override string Texture =>
-            "CorruptionOverhaul/Content/Items/Weapons/Melee/DefiledSlicingAxe";
+            "CorruptionOverhaul/Content/Projectiles/Melee/DefiledSlicingAxeEcho";
 
         public override void SetDefaults()
         {
-            Projectile.width = 58;
-            Projectile.height = 46;
+            Projectile.width = 40;
+            Projectile.height = FrameHeight;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Melee;
@@ -34,35 +38,63 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
             Projectile.localNPCHitCooldown = 18;
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        private bool IsValidTarget(NPC target)
         {
-            float timer = Projectile.localAI[0];
-            float alpha;
+            return target.active
+                && !target.friendly
+                && !target.dontTakeDamage
+                && target.lifeMax > 5
+                && target.CanBeChasedBy(Projectile);
+        }
 
-            if (timer < ChargeTime)
+        private int FindNearbyTarget()
+        {
+            int bestTarget = -1;
+            float bestDistance = SearchRadius * SearchRadius;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                float pulse = (float)System.Math.Sin(timer * 0.45f) * 0.5f + 0.5f;
-                alpha = 0.32f + pulse * 0.22f;
-            }
-            else
-            {
-                alpha = 0.68f;
+                NPC target = Main.npc[i];
+
+                if (!IsValidTarget(target))
+                    continue;
+
+                float distance = Vector2.DistanceSquared(
+                    Projectile.Center,
+                    target.Center
+                );
+
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestTarget = i;
+                }
             }
 
-            return new Color(
-                (int)(110 * alpha),
-                (int)(255 * alpha),
-                (int)(80 * alpha),
-                (int)(255 * alpha)
-            );
+            return bestTarget;
+        }
+
+        private int GetValidOrNearbyTarget(int targetIndex)
+        {
+            if (targetIndex >= 0 && targetIndex < Main.maxNPCs)
+            {
+                NPC target = Main.npc[targetIndex];
+
+                if (IsValidTarget(target))
+                    return targetIndex;
+            }
+
+            return FindNearbyTarget();
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Rectangle frame = texture.Frame();
-            Vector2 origin = frame.Size() / 2f;
+
+            int frameY = Projectile.frame * FrameHeight;
+            Rectangle frame = new Rectangle(0, frameY, 40, FrameHeight);
+            Vector2 origin = new Vector2(frame.Width / 2f, frame.Height / 2f);
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
 
             float timer = Projectile.localAI[0];
@@ -72,6 +104,7 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
                 : 0.12f;
 
             Color glowColor = new Color(80, 255, 45, 0) * glowStrength;
+
             SpriteEffects effects = Projectile.spriteDirection == -1
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
@@ -79,6 +112,7 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
             for (int i = 0; i < 4; i++)
             {
                 float angle = MathHelper.TwoPi * i / 4f;
+
                 Vector2 offset = new Vector2(
                     (float)System.Math.Cos(angle),
                     (float)System.Math.Sin(angle)
@@ -101,7 +135,7 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
                 texture,
                 drawPosition,
                 frame,
-                GetAlpha(lightColor).Value,
+                Color.White,
                 Projectile.rotation,
                 origin,
                 Projectile.scale,
@@ -114,28 +148,41 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
 
         public override void AI()
         {
+            Projectile.frameCounter++;
+
+            if (Projectile.frameCounter >= FrameSpeed)
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+
+                if (Projectile.frame >= FrameCount)
+                    Projectile.frame = 0;
+            }
+
             int targetIndex = (int)Projectile.ai[0];
             float angle = Projectile.ai[2];
+
             Projectile.localAI[0]++;
 
             if (Projectile.localAI[0] <= ChargeTime)
             {
-                if (targetIndex >= 0 && targetIndex < Main.maxNPCs)
+                targetIndex = GetValidOrNearbyTarget(targetIndex);
+
+                if (targetIndex >= 0)
                 {
+                    Projectile.ai[0] = targetIndex;
                     NPC target = Main.npc[targetIndex];
 
-                    if (target.active && !target.friendly && target.lifeMax > 5)
-                    {
-                        float currentAngle = angle + Projectile.localAI[0] * 0.025f;
-                        Vector2 offset = new Vector2(
-                            (float)System.Math.Cos(currentAngle),
-                            (float)System.Math.Sin(currentAngle)
-                        ) * OrbitRadius;
+                    float currentAngle = angle + Projectile.localAI[0] * 0.025f;
 
-                        Projectile.Center = target.Center + offset;
-                        Projectile.velocity = Vector2.Zero;
-                        Projectile.rotation += 0.16f;
-                    }
+                    Vector2 offset = new Vector2(
+                        (float)System.Math.Cos(currentAngle),
+                        (float)System.Math.Sin(currentAngle)
+                    ) * OrbitRadius;
+
+                    Projectile.Center = target.Center + offset;
+                    Projectile.velocity = Vector2.Zero;
+                    Projectile.rotation += 0.16f;
                 }
 
                 if (Projectile.localAI[0] == 1f)
@@ -171,30 +218,21 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
 
             if (Projectile.localAI[0] == ChargeTime + 1)
             {
-                if (targetIndex >= 0 && targetIndex < Main.maxNPCs)
+                targetIndex = GetValidOrNearbyTarget(targetIndex);
+
+                if (targetIndex >= 0)
                 {
+                    Projectile.ai[0] = targetIndex;
                     NPC target = Main.npc[targetIndex];
 
-                    if (target.active && !target.friendly && target.lifeMax > 5)
-                    {
-                        Vector2 direction = target.Center - Projectile.Center;
+                    Vector2 direction = target.Center - Projectile.Center;
 
-                        if (direction.LengthSquared() > 0f)
-                            direction.Normalize();
-                        else
-                            direction = Vector2.UnitX;
-
-                        Projectile.velocity = direction * LaunchSpeed;
-                    }
+                    if (direction.LengthSquared() > 0f)
+                        direction.Normalize();
                     else
-                    {
-                        Vector2 direction = new Vector2(
-                            (float)System.Math.Cos(angle),
-                            (float)System.Math.Sin(angle)
-                        );
+                        direction = Vector2.UnitX;
 
-                        Projectile.velocity = direction * LaunchSpeed;
-                    }
+                    Projectile.velocity = direction * LaunchSpeed;
                 }
                 else
                 {
@@ -229,20 +267,26 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
                 SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, Projectile.Center);
             }
 
-            if (targetIndex >= 0 && targetIndex < Main.maxNPCs)
+            targetIndex = GetValidOrNearbyTarget(targetIndex);
+
+            if (targetIndex >= 0)
             {
+                Projectile.ai[0] = targetIndex;
                 NPC target = Main.npc[targetIndex];
 
-                if (target.active && !target.friendly && target.lifeMax > 5)
-                {
-                    Vector2 toTarget = target.Center - Projectile.Center;
+                Vector2 toTarget = target.Center - Projectile.Center;
 
-                    if (toTarget.LengthSquared() > 0f)
-                    {
-                        toTarget.Normalize();
-                        Vector2 desiredVelocity = toTarget * HomingSpeed;
-                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, desiredVelocity, 0.08f);
-                    }
+                if (toTarget.LengthSquared() > 0f)
+                {
+                    toTarget.Normalize();
+
+                    Vector2 desiredVelocity = toTarget * HomingSpeed;
+
+                    Projectile.velocity = Vector2.Lerp(
+                        Projectile.velocity,
+                        desiredVelocity,
+                        0.08f
+                    );
                 }
             }
 

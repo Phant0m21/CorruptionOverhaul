@@ -10,12 +10,12 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
     public class DefiledSlicingAxeProjectile : ModProjectile
     {
         public override string Texture =>
-            "CorruptionOverhaul/Content/Items/Weapons/Melee/DefiledSlicingAxe";
+            "CorruptionOverhaul/Content/Projectiles/Melee/DefiledSlicingAxeProjectile";
 
         public override void SetDefaults()
         {
-            Projectile.width = 72;
-            Projectile.height = 56;
+            Projectile.width = 48;
+            Projectile.height = 74;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Melee;
@@ -148,12 +148,11 @@ namespace CorruptionOverhaul.Content.Projectiles.Melee
                 for (int i = 0; i < 3; i++)
                 {
                     float angle = MathHelper.TwoPi * i / 3f;
-                    float radius = 210f;
 
                     Vector2 offset = new Vector2(
                         (float)System.Math.Cos(angle),
                         (float)System.Math.Sin(angle)
-                    ) * radius;
+                    ) * 210f;
 
                     Vector2 spawnPosition = target.Center + offset;
 
